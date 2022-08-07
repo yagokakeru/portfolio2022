@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
   \*************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\n__webpack_require__(/*! ../scss/style */ \"./src/scss/style.scss\");\n\n\n//# sourceURL=webpack://portfolio/./src/ts/index.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n__webpack_require__(/*! ../scss/style */ \"./src/scss/style.scss\");\r\n\n\n//# sourceURL=webpack://portfolio/./src/ts/index.ts?");
 
 /***/ })
 
