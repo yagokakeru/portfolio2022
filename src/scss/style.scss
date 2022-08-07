@@ -1,0 +1,27 @@
+@use './variable' as var;
+
+html,
+body{
+    height: 100%;
+}
+
+body{
+    background-color: var.$colorBlack;
+}
+
+
+.title{
+    color: var.$colorWhite;
+    font-size: 20px;
+    font-family: bely-display, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sub_title{
+    color: var.$colorWhite;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    
+}

@@ -1,0 +1,26 @@
+/*!**************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/style.scss ***!
+  \**************************************************************************************************************/
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #2d2d2d;
+}
+
+.title {
+  color: #ebe3e4;
+  font-size: 20px;
+  font-family: bely-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.sub_title {
+  color: #ebe3e4;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 100;
+}
