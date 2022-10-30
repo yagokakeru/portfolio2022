@@ -19,6 +19,7 @@ module.exports = {
             directory: path.resolve(__dirname, 'dist'),
         },
         open: true,
+        hot: true,
     },
     module: {
         rules: [
@@ -31,10 +32,17 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(jpe?g|png|svg)$/,
+                test: /\.(jpe?g|png|webp|svg)$/,
                 type: 'asset/resource',
                 generator: {
                     filename: 'images/[name][ext]',
+                }
+            },
+            {
+                test: /\.(mp4)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'video/[name][ext]',
                 }
             },
             {
@@ -45,12 +53,28 @@ module.exports = {
                 test: /\.ts$/,
                 use: 'ts-loader',
             },
+            {
+                test: /\.(glsl|vert|frag)$/,
+                use: 'ts-shader-loader'
+                // exclude: '/node_modules/',
+                // use: [
+                //     'raw-loader',
+                //     'glslify-loader'
+                // ]
+                // type: 'asset/source',
+                // generator: {
+                //     filename: 'shaders/[name][ext]',
+                // },
+            },
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            inject: 'body'
+            inject: 'body',
+            minify: {
+                removeRedundantAttributes: false,
+            }
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css'

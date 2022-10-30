@@ -2,7 +2,7 @@ import gsap from 'gsap';
 
 const tl = gsap.timeline({pause: true});
 
-export class hamburgerBtnClick {
+export class hamburgerBtnClickA {
     inCanvas: HTMLElement | null;
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D | null;
@@ -10,23 +10,15 @@ export class hamburgerBtnClick {
         width: number;
         heigth: number;
     };
+    animHeight: number;
     point: {
         currentY: number;
         curveY: number;
+        pointY: number;
     }
+    event: HTMLElement | null;
+    
     constructor() {
-        // const str = 'Thankyou for watching';
-        // let text = '';
-        // str.split('').forEach(v => {
-        //     text += `<span>${v}</span>`;
-        // });
-        // document.querySelector('.-text').innerHTML = text;
-
-        // gsap.set('span', {
-        //     opacity: 0,
-        //     y: 50,
-        // });
-
         this.inCanvas = document.querySelector('.header_hamburger_menu_wrap');
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
@@ -41,103 +33,123 @@ export class hamburgerBtnClick {
 
         this.canvas.style.width = `${this.canvasSize.width}px`;
         this.canvas.style.height = `${this.canvasSize.heigth}px`;
-        this.inCanvas.appendChild(this.canvas);
-
-        this.point = {
-            currentY: this.canvas.height,
-            curveY: this.canvas.height,
+        if(this.inCanvas !== null){
+            this.inCanvas.appendChild(this.canvas);
+        }else{
+            //
         }
 
-        this.init();
+        this.animHeight = this.canvas.height;
+        this.point = {
+            currentY: 0,
+            curveY: 0,
+            pointY: 0,
+        }
+
+        this.event = document.querySelector('.header_hamburger');
+        if(this.event !== null){
+            this.event.addEventListener('click', () => {
+                this.init();
+            });
+        }else{
+            //
+        }
+        window.addEventListener('resize', this.onResize.bind(this), false);
     }
 
     init() {
         gsap.registerEffect({
             name: 'curve',
-            defaults: {
-                flag: true,
-            },
-            effect: (target, config) => {
+            effect: (target: EventTarget) => {
                 const tl = gsap.timeline({
                     onUpdate: () => {
-                        this.cureveUpdate(config.flag);
+                        this.cureveUpdate();
+                    },
+                    onStart: () => {
+                        if(this.animHeight > 0){
+                            this.animHeight = 0;
+                        }else{
+                            this.animHeight = this.canvas.height;
+                        }
                     }
                 })
-                .to(target, {
-                    duration: 0.8,
-                    curveY: 0,
+                .to(target, .3, {
+                    pointY: this.animHeight,
+                }, '<')
+                .to(target, .7, {
+                    curveY: this.animHeight,
                     ease: 'power4.out',
-                })
-                .to(target, {
-                    currentY: 0,
-                    duration: 0.8,
-                }, '<');
+                }, '<')
+                .to(target, .7, {
+                    currentY: this.animHeight,
+                    ease: 'power4.out',
+                } , '-=.45');
                 return tl;
             }
         });
 
-        const tl = gsap.timeline({delay: 1})
-        .add(gsap.effects.curve(this.point))
-        // .add(this.textAnim.bind(this))
-        .set(this.point, {
-            currentY: this.canvas.height,
-            curveY: this.canvas.height,
-        })
-        .add(gsap.effects.curve(this.point, {flag: false}), '+=2')
-        .from('.visual img', {
-            autoAlpha: 0,
-            y: 15,
-            duration: 1,
-        }, '-=0.5')
+        const tl = gsap.timeline()
+        .add(gsap.effects.curve(this.point));
     }
 
-    // textAnim() {
-    //     const tl = gsap.timeline()
-    //     .to('span', {
-    //         opacity: 1,
-    //         y: 0,
-    //         duration: 1,
-    //         ease: 'back.out(3)',
-    //         stagger: {
-    //             each: 0.02,
-    //         }
-    //     })
-    //     .to('span', {
-    //         opacity: 0,
-    //         y: -100,
-    //         duration: 0.6,
-    //         ease: 'back.in(2)',
-    //         stagger: {
-    //             each: 0.01,
-    //             ease: 'power2',
-    //         }
-    //     }, '-=0.2')
+    cureveUpdate() {
+        if(this.ctx !== null){
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = 'rgba(0,0,0,0)';
 
-    //     return tl;
-    // }
-
-    cureveUpdate(flag: boolean) {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = '#01031D';
-
-        if(flag) {
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.fillStyle = '#fff';
+            this.ctx.fillStyle = '#ebe3e4';
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(0,0);
+            this.ctx.lineTo(0, this.point.pointY);
+            this.ctx.quadraticCurveTo(this.canvas.width, this.point.curveY, this.canvas.width, this.point.currentY);
+            this.ctx.lineTo(this.canvas.width, 0);
+            this.ctx.closePath();
+            this.ctx.fill();
+        }
+    }
+
+    onResize() {
+        this.canvasSize = {
+            width: window.innerWidth,
+            heigth: window.innerHeight,
         }
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(0,0);
-        this.ctx.lineTo(0, this.point.currentY);
-        this.ctx.quadraticCurveTo(this.canvas.width / 2, this.point.curveY, this.canvas.width, this.point.currentY);
-        this.ctx.lineTo(this.canvas.width, 0);
-        this.ctx.closePath();
-        this.ctx.fill();
+        this.canvas.width = this.canvasSize.width * Math.min(2, window.devicePixelRatio);
+        this.canvas.height = this.canvasSize.heigth * Math.min(2, window.devicePixelRatio);
+
+        this.canvas.style.width = `${this.canvasSize.width}px`;
+        this.canvas.style.height = `${this.canvasSize.heigth}px`;
+
+        if(this.ctx !== null){
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = 'rgba(0,0,0,0)';
+
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = '#ebe3e4';
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(0,0);
+            this.ctx.lineTo(0, this.point.pointY);
+            this.ctx.quadraticCurveTo(this.canvas.width, this.point.curveY, this.canvas.width, this.point.currentY);
+            this.ctx.lineTo(this.canvas.width, 0);
+            this.ctx.closePath();
+            this.ctx.fill();
+        }
 
     }
 }
 
 export function hamburgerBtnClick(target: HTMLElement, targetClose: HTMLElement, targetLine: NodeListOf<Element>, targetDotted: NodeListOf<Element>){
     target.addEventListener('click', () => {
+        let from;
+        if (window.matchMedia('(min-width: 599px)').matches) {
+            from = 5;
+        } else {
+            from = 0;
+        }
+
         if(target.classList.contains('active') !== true){
             tl.to(targetClose, .3, {
                 scale: '1, 1'
@@ -146,15 +158,36 @@ export function hamburgerBtnClick(target: HTMLElement, targetClose: HTMLElement,
                 scale: 0
             }, '<')
             .to(targetLine[0], .2, {
+                backgroundColor: '#2b2b2b',
                 rotate: 45
             }, '+=.2')
             .to(targetLine[1], .2, {
+                backgroundColor: '#2b2b2b',
                 rotate: -45
             }, '<');
+
+            gsap.timeline()
+            .to('.header_hamburger_menu_wrap', .3, {
+                autoAlpha: 1,
+                overwrite: 'auto',
+            })
+            .to('.header_logo, .header_menu_link', .3, {
+                color: '#2b2b2b'
+            }, '<')
+            .to('.header_hamburger_menu_link', 1.2, {
+                y: 0,
+                overwrite: 'auto',
+                ease: 'power4.out',
+                stagger: {
+                    each: 0.2,
+                    from: from,
+                },
+            }, '+=.3');
 
             target.classList.add('active');
         }else{
             tl.to(targetLine, .2, {
+                backgroundColor: '#ebe3e4',
                 rotate: 0
             })
             .to(targetClose, .3, {
@@ -163,6 +196,20 @@ export function hamburgerBtnClick(target: HTMLElement, targetClose: HTMLElement,
             .to(targetDotted, .2, {
                 scale: 1
             });
+
+            gsap.timeline().to('.header_hamburger_menu_link', .5, {
+                y: '100%',
+                overwrite: 'auto',
+                ease: 'power4.in',
+            })
+            .to('.header_hamburger_menu_wrap', .5, {
+                autoAlpha: 0,
+                overwrite: 'auto',
+                ease: 'power4.in',
+            }, '<')
+            .to('.header_logo, .header_menu_link', .3, {
+                color: '#ebe3e4'
+            }, '<');
 
             target.classList.remove('active');
         }

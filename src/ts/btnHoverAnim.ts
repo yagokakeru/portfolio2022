@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { locoScroll } from './locomotiveScroll';
 
 export class btnHoverEffect {
     el: {
@@ -38,7 +39,7 @@ export class btnHoverEffect {
         this.el.target.addEventListener('mouseenter', this.mouseEnter.bind(this), false);
         this.el.target.addEventListener('mouseleave', this.mouseLeave.bind(this), false);
         this.mouseMove = this._mouseMove.bind(this);
-        window.addEventListener('scroll', this.adjustment.bind(this), false);
+        locoScroll.on('scroll', () => { this.adjustment(); });
         window.addEventListener('resize', this.adjustment.bind(this), false);
         this.onRaf();
     }
@@ -106,14 +107,10 @@ export class btnHoverCircleEffect extends btnHoverEffect {
         this.target = target;
         this.targetLine = targetLine;
         this.targetPath = targetPath;
-        this.hide(target);
 
         this.target.addEventListener('mouseover', this.mouseOverCircle.bind(this), false);
         this.target.addEventListener('mouseleave', this.mouseLeaveCircle.bind(this), false);
         this.set();
-    }
-    hide(target: HTMLElement) {
-        console.log(`${target} hides!`);
     }
 
     set() {
