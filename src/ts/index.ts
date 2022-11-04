@@ -16,6 +16,7 @@ import { postGet } from './postGet';
 import { postHoverAnim } from './postHoverAnim';
 import { textHover } from './textHover';
 import { smoothScroll, pageTopChengeHref } from './smoothScroll';
+import { email } from './email';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
@@ -40,8 +41,12 @@ const postsWrapDOM = document.querySelector('.posts_wrap') as HTMLElement;
 const worksImgWrapDOMs = document.querySelectorAll('.works_img_wrap') as NodeListOf<HTMLElement>;
 const worksInfoBtnDOMs = document.querySelectorAll('.works_info_btn') as NodeListOf<HTMLElement>;
 const postsBtnDOM = document.querySelector('.posts_btn') as HTMLElement;;
-const contactSubmitDOM = document.querySelector('.contact_submit') as HTMLElement;;
+const contactSubmitDOM = document.querySelector('.contact_submit') as HTMLElement;
 const btnList = [...worksInfoBtnDOMs, postsBtnDOM, contactSubmitDOM];
+const contactFormDOM = document.querySelector('.contact_form') as HTMLElement;
+const contactLineInputDOMs = document.querySelectorAll('.contact_line input') as NodeListOf<HTMLElement>;
+const contactLinetextareaDOMs = document.querySelectorAll('.contact_line textarea') as NodeListOf<HTMLElement>;
+const formList = [...contactLineInputDOMs, ...contactLinetextareaDOMs];
 
 postGet(postsWrapDOM);
 
@@ -49,6 +54,8 @@ locomotiveScroll();
 loadingAnim();
 
 new ModalVideo('.works_video_btn', {ratio: '16:9.3'});
+
+email(contactFormDOM, formList);
 
 const mediaQueryMin600 = window.matchMedia('(min-width: 600px)');
 const mediaQuery = (event: any) => {

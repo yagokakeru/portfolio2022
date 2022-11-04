@@ -646,6 +646,7 @@ body{
     display: flex;
     align-items: center;
     overflow: hidden;
+    padding-bottom: 1.5%;
 }
 
 .posts_title{
@@ -731,6 +732,11 @@ body{
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 100px;
+}
+
+input:-webkit-autofill{
+    box-shadow: 0 0 0 1000px var.$colorBlack inset;
+    -webkit-text-fill-color: var.$colorWhite !important;
 }
 
 .contact_line{
