@@ -17,6 +17,7 @@ import { postHoverAnim } from './postHoverAnim';
 import { textHover } from './textHover';
 import { smoothScroll, pageTopChengeHref } from './smoothScroll';
 import { email } from './email';
+import { mouseStalker } from './mouseStalker';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
@@ -47,13 +48,14 @@ const contactFormDOM = document.querySelector('.contact_form') as HTMLElement;
 const contactLineInputDOMs = document.querySelectorAll('.contact_line input') as NodeListOf<HTMLElement>;
 const contactLinetextareaDOMs = document.querySelectorAll('.contact_line textarea') as NodeListOf<HTMLElement>;
 const formList = [...contactLineInputDOMs, ...contactLinetextareaDOMs];
+const mouseStalkerDOM = document.querySelector('.mouse_stalker') as HTMLElement;
 
 postGet(postsWrapDOM);
 
 locomotiveScroll();
 loadingAnim();
 
-new ModalVideo('.works_video_btn', {ratio: '16:9.3'});
+new ModalVideo('.modal_video', {ratio: '16:9.3'});
 
 email(contactFormDOM, formList);
 
@@ -66,8 +68,14 @@ const mediaQuery = (event: any) => {
         new hamburgerBtnEffect(headerHamburgerDOM, hamburgerLineDOM, hamburgerLineCls1DOM, headerHamburgerCircleDOMs);
         new btnHoverCircleEffect(pagetopBtnDOM, pagetopLineDOM, pagetopLineCls1DOM);
         
-        worksImgWrapDOMs.forEach(target => {
+        worksImgWrapDOMs.forEach((target, index) => {
             parallaxScroll(target);
+
+            if(index == 3){
+                new mouseStalker(mouseStalkerDOM, target, 'View Video');
+            }else{
+                new mouseStalker(mouseStalkerDOM, target);
+            }
         });
     } else {
         //

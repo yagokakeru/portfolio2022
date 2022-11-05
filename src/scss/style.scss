@@ -49,7 +49,8 @@ body{
 .contact_title,
 .contact_submit,
 .footer_menu_link,
-.copyright{
+.copyright,
+.mouse_stalker{
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -502,6 +503,7 @@ body{
 .works_title{
     color: var.$colorWhite;
     font-size: 16px;
+    font-weight: 400;
     margin-left: 5%;
 }
 
@@ -578,6 +580,7 @@ body{
 }
 
 .works_img_wrap{
+    cursor: pointer;
     display: block;
     position: relative;
 }
@@ -627,7 +630,6 @@ body{
 }
 
 .works_video_btn{
-    cursor: pointer;
     display: block;
     width: 70px;
     height: auto;
@@ -678,6 +680,7 @@ body{
 .posts_img{
     display: block;
     opacity: 0;
+    pointer-events: none;
     width: 80%;
     height: auto;
     position: absolute;
@@ -889,6 +892,27 @@ input:-webkit-autofill{
     height: auto;
     transform: rotate(180deg);
 }
+
+.mouse_stalker{
+    background-color: var.$colorWhite;
+    border-radius: 50%;
+    color: var.$colorBlack;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 400;
+    mix-blend-mode: difference;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 
 
 br.pc{
@@ -1331,6 +1355,10 @@ br.sp{
 
     .pagetop_btn{
         right: 5%;
+    }
+
+    .mouse_stalker{
+        display: none;
     }
 
 
