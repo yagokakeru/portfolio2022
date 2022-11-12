@@ -18,6 +18,7 @@ import { textHover } from './textHover';
 import { smoothScroll, pageTopChengeHref } from './smoothScroll';
 import { email } from './email';
 import { mouseStalker } from './mouseStalker';
+import { scrollImage } from './scrollImage';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
@@ -40,6 +41,7 @@ const spSkillWrapDOMs = document.querySelectorAll('.skill_if_sp .skill_wrap') as
 const postsTitleDOM = document.querySelector('.posts_title') as HTMLElement;
 const postsWrapDOM = document.querySelector('.posts_wrap') as HTMLElement;
 const worksImgWrapDOMs = document.querySelectorAll('.works_img_wrap') as NodeListOf<HTMLElement>;
+const worksImgDOMs = document.querySelectorAll<HTMLImageElement>('.works_img')!;
 const worksInfoBtnDOMs = document.querySelectorAll('.works_info_btn') as NodeListOf<HTMLElement>;
 const postsBtnDOM = document.querySelector('.posts_btn') as HTMLElement;;
 const contactSubmitDOM = document.querySelector('.contact_submit') as HTMLElement;
@@ -49,6 +51,8 @@ const contactLineInputDOMs = document.querySelectorAll('.contact_line input') as
 const contactLinetextareaDOMs = document.querySelectorAll('.contact_line textarea') as NodeListOf<HTMLElement>;
 const formList = [...contactLineInputDOMs, ...contactLinetextareaDOMs];
 const mouseStalkerDOM = document.querySelector('.mouse_stalker') as HTMLElement;
+const webgl01DOM = document.querySelector<HTMLElement>('.webgl01')!;
+const webgl02DOM = document.querySelector<HTMLElement>('.webgl02')!;
 
 postGet(postsWrapDOM);
 
@@ -113,6 +117,8 @@ spSkillWrapDOMs.forEach((target: HTMLElement, index) => {
 slider(postsTitleDOM);
 
 progress();
+
+new scrollImage(worksImgDOMs, webgl02DOM);
 
 setTimeout(() => {
     const postsInnersDOM = document.querySelectorAll('.posts_inner') as NodeListOf<Element>;

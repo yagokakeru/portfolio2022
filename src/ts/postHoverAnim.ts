@@ -55,7 +55,6 @@ export class postHoverAnim {
             near: 0.1,
             far: 1000,
         }
-
         this.fovRad = (this.cameraParam.fov / 2) * (Math.PI / 180);
         this.cameraDistance = (this.windowSize.height / 2) / Math.tan(this.fovRad);
 
@@ -97,13 +96,13 @@ export class postHoverAnim {
     }
 
     setRender() {
+        const webgl01DOM = document.querySelector('.webgl01') as HTMLElement;
         this.renderer = new THREE.WebGLRenderer({
+            canvas: webgl01DOM,
             alpha: true,
         });
         this.renderer.setSize(this.windowSize.width, this.windowSize.height);
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.domElement.classList.add('webgl');
-        document.body.appendChild(this.renderer.domElement);
     }
 
     setMesh() {
