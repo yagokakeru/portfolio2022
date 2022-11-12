@@ -19,6 +19,7 @@ import { smoothScroll, pageTopChengeHref } from './smoothScroll';
 import { email } from './email';
 import { mouseStalker } from './mouseStalker';
 import { scrollImage } from './scrollImage';
+import { textAnim } from './textAnim';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
@@ -38,6 +39,7 @@ const headerMenuLinkDOMs = document.querySelectorAll('.header_menu_link') as Nod
 const footerMenuLinkDOMs = document.querySelectorAll('.footer_menu_link') as NodeListOf<HTMLElement>;
 const pcSkillWrapDOMs = document.querySelectorAll('.skill_if_pc .skill_wrap') as NodeListOf<HTMLElement>;
 const spSkillWrapDOMs = document.querySelectorAll('.skill_if_sp .skill_wrap') as NodeListOf<HTMLElement>;
+const postsTitleWrapDOM = document.querySelector('.posts_title_wrap') as HTMLElement;
 const postsTitleDOM = document.querySelector('.posts_title') as HTMLElement;
 const postsWrapDOM = document.querySelector('.posts_wrap') as HTMLElement;
 const worksImgWrapDOMs = document.querySelectorAll('.works_img_wrap') as NodeListOf<HTMLElement>;
@@ -53,6 +55,7 @@ const formList = [...contactLineInputDOMs, ...contactLinetextareaDOMs];
 const mouseStalkerDOM = document.querySelector('.mouse_stalker') as HTMLElement;
 const webgl01DOM = document.querySelector<HTMLElement>('.webgl01')!;
 const webgl02DOM = document.querySelector<HTMLElement>('.webgl02')!;
+const webgl03DOM = document.querySelector<HTMLElement>('.webgl03')!;
 
 postGet(postsWrapDOM);
 
@@ -62,31 +65,6 @@ loadingAnim();
 new ModalVideo('.modal_video', {ratio: '16:9.3'});
 
 email(contactFormDOM, formList);
-
-const mediaQueryMin600 = window.matchMedia('(min-width: 600px)');
-const mediaQuery = (event: any) => {
-    if (event.matches) {
-        btnList.forEach(target => {
-            new btnHoverEffect(target);
-        });
-        new hamburgerBtnEffect(headerHamburgerDOM, hamburgerLineDOM, hamburgerLineCls1DOM, headerHamburgerCircleDOMs);
-        new btnHoverCircleEffect(pagetopBtnDOM, pagetopLineDOM, pagetopLineCls1DOM);
-        
-        worksImgWrapDOMs.forEach((target, index) => {
-            parallaxScroll(target);
-
-            if(index == 3){
-                new mouseStalker(mouseStalkerDOM, target, 'View Video');
-            }else{
-                new mouseStalker(mouseStalkerDOM, target);
-            }
-        });
-    } else {
-        //
-    }
-};
-mediaQueryMin600.addEventListener('change', mediaQuery);
-mediaQuery(mediaQueryMin600);
 
 headerMenuLinkDOMs.forEach(target => {
     textHover(target);
@@ -119,6 +97,34 @@ slider(postsTitleDOM);
 progress();
 
 new scrollImage(worksImgDOMs, webgl02DOM);
+
+const mediaQueryMin600 = window.matchMedia('(min-width: 600px)');
+const mediaQuery = (event: any) => {
+    if (event.matches) {
+        btnList.forEach(target => {
+            new btnHoverEffect(target);
+        });
+        new hamburgerBtnEffect(headerHamburgerDOM, hamburgerLineDOM, hamburgerLineCls1DOM, headerHamburgerCircleDOMs);
+        new btnHoverCircleEffect(pagetopBtnDOM, pagetopLineDOM, pagetopLineCls1DOM);
+        
+        worksImgWrapDOMs.forEach((target, index) => {
+            parallaxScroll(target);
+
+            if(index == 3){
+                new mouseStalker(mouseStalkerDOM, target, 'View Video');
+            }else{
+                new mouseStalker(mouseStalkerDOM, target);
+            }
+        });
+
+        const postsTitleDOMs = document.querySelectorAll('.posts_title') as NodeListOf<Element>;
+        new textAnim(postsTitleDOMs, postsTitleWrapDOM, webgl03DOM);
+    } else {
+        //
+    }
+};
+mediaQueryMin600.addEventListener('change', mediaQuery);
+mediaQuery(mediaQueryMin600);
 
 setTimeout(() => {
     const postsInnersDOM = document.querySelectorAll('.posts_inner') as NodeListOf<Element>;

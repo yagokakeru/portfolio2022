@@ -56,15 +56,6 @@ module.exports = {
             {
                 test: /\.(glsl|vert|frag)$/,
                 use: 'ts-shader-loader'
-                // exclude: '/node_modules/',
-                // use: [
-                //     'raw-loader',
-                //     'glslify-loader'
-                // ]
-                // type: 'asset/source',
-                // generator: {
-                //     filename: 'shaders/[name][ext]',
-                // },
             },
         ]
     },

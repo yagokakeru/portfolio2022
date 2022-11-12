@@ -653,8 +653,10 @@ body{
 }
 
 .posts_title{
+    cursor: default;
     color: var.$colorWhite;
     font-size: 150px;
+    opacity: 0;
     white-space: nowrap;
 }
 
@@ -1298,6 +1300,7 @@ br.sp{
 
     .posts_title{
         font-size: 60px;
+        opacity: 1;
     }
 
     .posts_container{
