@@ -89,7 +89,7 @@ export class bgAnim {
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
-                uFrequency: { value: new THREE.Vector2(this.windowSize.width, this.windowSize.height / 2) },
+                uFrequency: { value: new THREE.Vector2(this.windowSize.width / 3, this.windowSize.height / 2) },
                 uTime: { value: 0 },
                 uColor: { value: new THREE.Color('#ebe3e4') },
                 uSizeW: { value: 0.9 },
@@ -112,7 +112,7 @@ export class bgAnim {
         });
 
         gsap.effects.uniformsChenge(this.material.uniforms.uSizeW);
-        gsap.effects.uniformsChenge(this.material.uniforms.uSizeH, { value: 0.6 });
+        gsap.effects.uniformsChenge(this.material.uniforms.uSizeH, { value: 0.9 });
     }
 
     animete() {
