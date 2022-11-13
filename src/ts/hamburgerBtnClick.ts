@@ -144,7 +144,7 @@ export class hamburgerBtnClickA {
 export function hamburgerBtnClick(target: HTMLElement, targetClose: HTMLElement, targetLine: NodeListOf<Element>, targetDotted: NodeListOf<Element>){
     target.addEventListener('click', () => {
         let from;
-        if (window.matchMedia('(min-width: 599px)').matches) {
+        if (window.matchMedia('(min-width: 961px)').matches) {
             from = 5;
         } else {
             from = 0;

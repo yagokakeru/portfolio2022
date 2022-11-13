@@ -68,6 +68,7 @@ export class textAnim {
         this.setFontLoader();
         this.setLight();
         this.onMouseMove();
+        this.onResize();
     }
 
     setScene() {
@@ -150,7 +151,6 @@ export class textAnim {
         });
     }
 
-
     animate() {
         this.renderer.render(this.scene, this.camera);
 
@@ -161,5 +161,20 @@ export class textAnim {
         requestAnimationFrame(this.animate.bind(this));
     }
 
+    onResize() {
+        window.addEventListener('resize' , () => {
+            this.windowSize.width = window.innerWidth;
+            this.windowSize.height = window.innerHeight;
+
+            this.renderer.setPixelRatio(window.devicePixelRatio);
+            this.renderer.setSize(this.windowSize.width, this.windowSize.height);
+
+            this.camera.aspect = this.windowSize.width / this.windowSize.height;
+            this.camera.updateProjectionMatrix();
+
+            this.cameraDistance = (this.windowSize.height / 2) / Math.tan(this.fovRad);
+            this.camera.position.z = this.cameraDistance;
+        });
+    }
 
 }

@@ -20,6 +20,7 @@ import { email } from './email';
 import { mouseStalker } from './mouseStalker';
 import { scrollImage } from './scrollImage';
 import { textAnim } from './textAnim';
+import { bgAnim } from './bgAnim';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
@@ -56,6 +57,7 @@ const mouseStalkerDOM = document.querySelector('.mouse_stalker') as HTMLElement;
 const webgl01DOM = document.querySelector<HTMLElement>('.webgl01')!;
 const webgl02DOM = document.querySelector<HTMLElement>('.webgl02')!;
 const webgl03DOM = document.querySelector<HTMLElement>('.webgl03')!;
+const webgl04DOM = document.querySelector<HTMLElement>('.webgl04')!;
 
 postGet(postsWrapDOM);
 
@@ -125,6 +127,8 @@ const mediaQuery = (event: any) => {
 };
 mediaQueryMin600.addEventListener('change', mediaQuery);
 mediaQuery(mediaQueryMin600);
+
+new bgAnim(webgl04DOM);
 
 setTimeout(() => {
     const postsInnersDOM = document.querySelectorAll('.posts_inner') as NodeListOf<Element>;
