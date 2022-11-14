@@ -1,4 +1,3 @@
-import gsap from 'gsap';
 import * as THREE from 'three';
 import { Clock, Mesh, PerspectiveCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three';
 
@@ -10,6 +9,7 @@ export class bgAnim {
     windowSize: {
         width: number;
         height: number;
+        minWH: number;
     }
     cameraParam: {
         fov: number;
@@ -33,7 +33,8 @@ export class bgAnim {
 
         this.windowSize = {
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            minWH: Math.min(window.innerWidth, window.innerHeight)
         }
 
         this.cameraParam = {
@@ -55,7 +56,6 @@ export class bgAnim {
         this.setCamera();
         this.setRenderer();
         this.setMesh();
-        this.uniformsChenge();
         this.animete();
         this.onResize();
     }
@@ -84,35 +84,22 @@ export class bgAnim {
     }
 
     setMesh() {
-        this.geometry = new THREE.PlaneGeometry(this.windowSize.width, this.windowSize.height, 16, 16);
+        this.geometry = new THREE.PlaneGeometry(1, 1, 2, 2);
         this.material = new THREE.ShaderMaterial({
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
-                uFrequency: { value: new THREE.Vector2(this.windowSize.width / 3, this.windowSize.height / 2) },
+                uFrequency: { value: this.windowSize.minWH },
                 uTime: { value: 0 },
                 uColor: { value: new THREE.Color('#ebe3e4') },
-                uSizeW: { value: 0.9 },
-                uSizeH: { value: 1.0 },
             },
             transparent: true,
         });
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.mesh.scale.x = this.windowSize.width;
+        this.mesh.scale.y = this.windowSize.height;
 
         this.scene.add(this.mesh);
-    }
-
-    uniformsChenge() {
-        gsap.registerEffect({
-            name: 'uniformsChenge',
-            defaults: { duration: 5, value: 1.0 },
-            effect: (targets: HTMLElement, config: any) => {
-                return gsap.to(targets, config.duration, { value: config.value, repeat: -1, yoyo: true });
-            },
-        });
-
-        gsap.effects.uniformsChenge(this.material.uniforms.uSizeW);
-        gsap.effects.uniformsChenge(this.material.uniforms.uSizeH, { value: 0.9 });
     }
 
     animete() {
@@ -128,15 +115,19 @@ export class bgAnim {
         window.addEventListener('resize', () => {
             this.windowSize.width = window.innerWidth;
             this.windowSize.height = window.innerHeight;
+            this.windowSize.minWH = Math.min(window.innerWidth, window.innerHeight);
 
-            this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(this.windowSize.width, this.windowSize.height);
+            this.renderer.setPixelRatio(window.devicePixelRatio);
+
+            this.material.uniforms.uFrequency.value = this.windowSize.minWH;
+            this.mesh.scale.x = this.windowSize.width;
+            this.mesh.scale.y = this.windowSize.height;
 
             this.camera.aspect = this.windowSize.width / this.windowSize.height;
-            this.camera.updateProjectionMatrix();
-
             this.cameraDistance = (this.windowSize.height / 2) / Math.tan(this.fovRad);
             this.camera.position.z = this.cameraDistance;
+            this.camera.updateProjectionMatrix();
         });
     }
 }
