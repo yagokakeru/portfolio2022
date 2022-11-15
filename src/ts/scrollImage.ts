@@ -49,7 +49,7 @@ export class scrollImage {
             fov: 50,
             aspect: this.windowSize.width / this.windowSize.height,
             near: 0.1,
-            far: 1000
+            far: 2000
         }
         this.fovRad = (this.cameraParam.fov / 2) * (Math.PI / 180);
         this.cameraDistance = (this.windowSize.height / 2) / Math.tan(this.fovRad);

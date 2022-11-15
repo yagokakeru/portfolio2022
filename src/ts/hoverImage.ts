@@ -54,7 +54,7 @@ export class hoverImage {
             fov: 50,
             aspect: this.windowSize.width / this.windowSize.height,
             near: 0.1,
-            far: 1000,
+            far: 2000,
         }
 
         this.fovRad = (this.cameraParam.fov / 2) * (Math.PI / 180);
