@@ -16,7 +16,7 @@ export class hamburgerBtnClickA {
         curveY: number;
         pointY: number;
     }
-    event: HTMLElement | null;
+    event: (Element | null)[];
     
     constructor() {
         this.inCanvas = document.querySelector('.header_hamburger_menu_wrap');
@@ -46,14 +46,16 @@ export class hamburgerBtnClickA {
             pointY: 0,
         }
 
-        this.event = document.querySelector('.header_hamburger');
-        if(this.event !== null){
-            this.event.addEventListener('click', () => {
-                this.init();
-            });
-        }else{
-            //
-        }
+        this.event = [...document.querySelectorAll('.header_hamburger_menu_link'), document.querySelector('.header_hamburger')];
+        this.event.forEach(target => {
+            if(target !== null){
+                target.addEventListener('click', () => {
+                    this.init();
+                });
+            }else{
+                //
+            }
+        });
         window.addEventListener('resize', this.onResize.bind(this), false);
     }
 
@@ -141,77 +143,79 @@ export class hamburgerBtnClickA {
     }
 }
 
-export function hamburgerBtnClick(target: HTMLElement, targetClose: HTMLElement, targetLine: NodeListOf<Element>, targetDotted: NodeListOf<Element>){
-    target.addEventListener('click', () => {
-        let from;
-        if (window.matchMedia('(min-width: 961px)').matches) {
-            from = 5;
-        } else {
-            from = 0;
-        }
-
-        if(target.classList.contains('active') !== true){
-            tl.to(targetClose, .3, {
-                scale: '1, 1'
-            })
-            .to(targetDotted, .2, {
-                scale: 0
-            }, '<')
-            .to(targetLine[0], .2, {
-                backgroundColor: '#2b2b2b',
-                rotate: 45
-            }, '+=.2')
-            .to(targetLine[1], .2, {
-                backgroundColor: '#2b2b2b',
-                rotate: -45
-            }, '<');
-
-            gsap.timeline()
-            .to('.header_hamburger_menu_wrap', .3, {
-                autoAlpha: 1,
-                overwrite: 'auto',
-            })
-            .to('.header_logo, .header_menu_link', .3, {
-                color: '#2b2b2b'
-            }, '<')
-            .to('.header_hamburger_menu_link', 1.2, {
-                y: 0,
-                overwrite: 'auto',
-                ease: 'power4.out',
-                stagger: {
-                    each: 0.2,
-                    from: from,
-                },
-            }, '+=.3');
-
-            target.classList.add('active');
-        }else{
-            tl.to(targetLine, .2, {
-                backgroundColor: '#ebe3e4',
-                rotate: 0
-            })
-            .to(targetClose, .3, {
-                scale: '0, 1'
-            }, '+=.2')
-            .to(targetDotted, .2, {
-                scale: 1
-            });
-
-            gsap.timeline().to('.header_hamburger_menu_link', .5, {
-                y: '100%',
-                overwrite: 'auto',
-                ease: 'power4.in',
-            })
-            .to('.header_hamburger_menu_wrap', .5, {
-                autoAlpha: 0,
-                overwrite: 'auto',
-                ease: 'power4.in',
-            }, '<')
-            .to('.header_logo, .header_menu_link', .3, {
-                color: '#ebe3e4'
-            }, '<');
-
-            target.classList.remove('active');
-        }
+export function hamburgerBtnClick(target: Element[], targetClose: HTMLElement, targetLine: NodeListOf<Element>, targetDotted: NodeListOf<Element>){
+    target.forEach(target => {
+        target.addEventListener('click', () => {
+            let from;
+            if (window.matchMedia('(min-width: 961px)').matches) {
+                from = 5;
+            } else {
+                from = 0;
+            }
+    
+            if(document.querySelector('.header_hamburger')!.classList.contains('active') !== true){
+                tl.to(targetClose, .3, {
+                    scale: '1, 1'
+                })
+                .to(targetDotted, .2, {
+                    scale: 0
+                }, '<')
+                .to(targetLine[0], .2, {
+                    backgroundColor: '#2b2b2b',
+                    rotate: 45
+                }, '+=.2')
+                .to(targetLine[1], .2, {
+                    backgroundColor: '#2b2b2b',
+                    rotate: -45
+                }, '<');
+    
+                gsap.timeline()
+                .to('.header_hamburger_menu_wrap', .3, {
+                    autoAlpha: 1,
+                    overwrite: 'auto',
+                })
+                .to('.header_logo, .header_menu_link', .3, {
+                    color: '#2b2b2b'
+                }, '<')
+                .to('.header_hamburger_menu_link', 1.2, {
+                    y: 0,
+                    overwrite: 'auto',
+                    ease: 'power4.out',
+                    stagger: {
+                        each: 0.2,
+                        from: from,
+                    },
+                }, '+=.3');
+    
+                document.querySelector('.header_hamburger')!.classList.add('active');
+            }else{
+                tl.to(targetLine, .2, {
+                    backgroundColor: '#ebe3e4',
+                    rotate: 0
+                })
+                .to(targetClose, .3, {
+                    scale: '0, 1'
+                }, '+=.2')
+                .to(targetDotted, .2, {
+                    scale: 1
+                });
+    
+                gsap.timeline().to('.header_hamburger_menu_link', .5, {
+                    y: '100%',
+                    overwrite: 'auto',
+                    ease: 'power4.in',
+                })
+                .to('.header_hamburger_menu_wrap', .5, {
+                    autoAlpha: 0,
+                    overwrite: 'auto',
+                    ease: 'power4.in',
+                }, '<')
+                .to('.header_logo, .header_menu_link', .3, {
+                    color: '#ebe3e4'
+                }, '<');
+    
+                document.querySelector('.header_hamburger')!.classList.remove('active');
+            }
+        });
     });
 }

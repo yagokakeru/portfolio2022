@@ -23,6 +23,8 @@ import { textAnim } from './textAnim';
 import { bgAnim } from './bgAnim';
 
 const headerHamburgerDOM = document.querySelector('.header_hamburger') as HTMLElement;
+const headerHamburgerMenuLinkDOM = document.querySelectorAll('.header_hamburger_menu_link') as NodeListOf<Element>;
+const headerHamburgerList = [headerHamburgerDOM, ...headerHamburgerMenuLinkDOM];
 const hamburgerLineDOM = document.querySelector('.hamburger_line') as HTMLElement;
 const hamburgerLineCls1DOM = document.querySelector('.hamburger_line .cls-1') as HTMLElement;
 const headerHamburgerDottedDOM = document.querySelectorAll('.header_hamburger .dotted') as NodeListOf<Element>;
@@ -54,7 +56,6 @@ const contactLineInputDOMs = document.querySelectorAll('.contact_line input') as
 const contactLinetextareaDOMs = document.querySelectorAll('.contact_line textarea') as NodeListOf<HTMLElement>;
 const formList = [...contactLineInputDOMs, ...contactLinetextareaDOMs];
 const mouseStalkerDOM = document.querySelector('.mouse_stalker') as HTMLElement;
-const webgl01DOM = document.querySelector<HTMLElement>('.webgl01')!;
 const webgl02DOM = document.querySelector<HTMLElement>('.webgl02')!;
 const webgl03DOM = document.querySelector<HTMLElement>('.webgl03')!;
 const webgl04DOM = document.querySelector<HTMLElement>('.webgl04')!;
@@ -75,7 +76,7 @@ footerMenuLinkDOMs.forEach(target => {
     textHover(target);
 });
 
-hamburgerBtnClick(headerHamburgerDOM, hamburgerLineCloseDOM, headerHamburgerLineDOMs, headerHamburgerDottedDOM);
+hamburgerBtnClick(headerHamburgerList, hamburgerLineCloseDOM, headerHamburgerLineDOMs, headerHamburgerDottedDOM);
 new hamburgerBtnClickA;
 
 new hoverImage(headerHamburgerMenuWrapDOM, headerHamburgerMenuInnerDOM, headerHamburgerMenuListDOMs);
